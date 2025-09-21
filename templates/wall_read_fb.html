@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>撞破南墙找西墙</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/s.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body style="background-color: #fcfcfc">
+
+{% include '_nav_index.html' %}
+
+<br>
+
+<div class="container">
+    <a href="/send">
+        <button class="btn btn-major" style="width:100%; padding: 10px;">在表白墙上发布内容
+        </button>
+    </a><br><br>
+    <div class="row">
+        <div class="col-md-8">
+
+
+            <div class="post" style="background-color: white; padding: 10px; box-shadow: 2px 2px 5px gray;">
+                <br>
+                <p>共{{ wall_total }}条内容</p>
+                <hr>
+
+                {% for i in reslist %}
+
+                <div class="d-flex align-items-center">
+                    {% if i['type'] == 'anonymous' %}
+                    <img src="/static/userheader.svg" width="60px" alt="User Avatar"
+                         class="avatar me-3 rounded-circle">
+                    <div>
+                        <h5 class="mb-0">匿名用户</h5>
+                        <p class="text-muted mb-0">{{ i['time'] }}</p>
+                    </div>
+                    {% else %}
+                    <img src="{{ i['head'] }}" width="60px" alt="User Avatar"
+                         class="avatar me-3 rounded-circle">
+                    <div>
+                        <h5 class="mb-0">{{ i['name'] }}
+                            {% if i['is_official'] %}&nbsp;<span class="badge bg-official">官方</span>{% endif %}
+                            {% if i['is_vip'] %}&nbsp;<span class="badge bg-vip">VIP</span>{% endif %}
+                        </h5>
+                        <p class="text-muted mb-0">{{ i['time'] }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <p class="post-content">{{ i['content']|safe }}</p>
+                    {% if i['img'] %}
+                    <a href="/uploads/{{ i['img'] }}" target="_blank"><img src="/uploads/{{ i['img'] }}"
+                                                                           width="200px" height="150px"
+                                                                           class="img-fluid mt-3"></a>
+                    {% endif %}
+                    <br><br><a href="/messages?mid={{ i['mid'] }}">
+                    <button type="submit" class="btn btn-ff9933">评论</button>
+                </a>
+                </div>
+
+                <hr>
+                {% endfor %}
+
+
+                <br><br>
+                <ul class="pagination justify-content-center">
+                    {% if page == 1 %}
+                    <li class="page-item disabled"><a class="page-link">首页</a></li>
+                    <li class="page-item disabled"><a class="page-link">上一页</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="/wall">首页</a></li>
+                    <li class="page-item"><a class="page-link" href="/wall?page={{ page - 1 }}">上一页</a></li>
+                    {% endif %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ page }}</a></li>
+                    {% if page == page_num %}
+                    <li class="page-item disabled"><a class="page-link">下一页</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="/wall?page={{ page + 1 }}">下一页</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <br><br><br><br><br>
+
+        </div>
+
+        <div class="col-md-4">
+            {% include '_frame_right.html' %}
+        </div>
+        <!--    <img class="card-img-bottom" src="https://static.runoob.com/images/mix/img_avatar.png" alt="Card image" style="width:100%">-->
+    </div>
+</div>
+
+
+<script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+<!--<script src="/static/bolang.json"></script>-->
+<!--<script src="/static/yinghua.json"></script>-->
+
+</body>
+</html>

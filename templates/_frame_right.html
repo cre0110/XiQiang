@@ -1,0 +1,106 @@
+<ul class="list-group" style="box-shadow: 1px 1px 5px gray; margin-bottom:1rem; border-radius: 10px;">
+    <li class="list-group-item"><div style="margin: 10px;"><img src="{{ user['head'] }}" width="70px" height="70px"
+                                                                style="border-radius:50%; display: inline-block;">
+        <h3 style="display: inline-block;">{{ user['name'] }}</h3></div></li>
+    <a href="/wall/user?uid={{ user['qq'] }}" class="list-group-item list-group-item-action">我的投稿</a>
+    <a href="/change_name" class="list-group-item list-group-item-action">修改用户名</a>
+    <a href="/feedback" class="list-group-item list-group-item-action">反馈意见&留言</a>
+</ul>
+<div class="alert" style="box-shadow: 1px 1px 5px gray; border-radius: 10px; background: white;">
+    <div id="hitokoto" style="display: inline;">
+        <br>
+        <strong><font size="4px"><p id="hitokoto_text" style="text-align:center;"></p></font></strong>
+        <p id="hitokoto_information" style="text-align:right;"></p>
+    </div>
+</div>
+<!--<div class="alert" style="box-shadow: 1px 1px 5px gray; border-radius: 10px; background: white;">-->
+<!--    <h3>快捷发送表白墙</h3>-->
+<!--    <form action="/send" , method="post" enctype="multipart/form-data">-->
+<!--        <div class="mb-3 mt-3">-->
+<!--                    <textarea class="form-control" rows="5" id="comment" name="content" style="width: 100%;"-->
+<!--                              required></textarea>-->
+<!--        </div>-->
+<!--        <div class="form-check mb-3">-->
+<!--            <label class="form-check-label">-->
+<!--                <input class="form-check-input" type="checkbox" name="anonymous"> 匿名发送-->
+<!--            </label>-->
+<!--        </div>-->
+
+<!--        <button type="submit" class="btn btn-primary btn-major">快捷发布-->
+<!--        </button>-->
+
+<!--        &lt;!&ndash;点击添加按钮只弹出模态框，不执行其它动作&ndash;&gt;-->
+<!--        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#uploadImgModal">-->
+<!--            添加图片-->
+<!--        </button>-->
+
+<!--        &lt;!&ndash; 上传图片模态框 &ndash;&gt;-->
+<!--        <div class="modal fade" id="uploadImgModal" data-bs-keyboard="false" tabindex="-1"-->
+<!--             aria-labelledby="staticBackdropLabel" aria-hidden="true">-->
+<!--            <div class="modal-dialog modal-dialog-centered">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h5 class="modal-title" id="updateImgModal-staticBackdropLabel">上传图片</h5>-->
+<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal"-->
+<!--                                aria-label="Close"></button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <div class="row mx-3">-->
+<!--                            &lt;!&ndash; 图片类型：gif、png、jpeg &ndash;&gt;-->
+<!--                            <input type="file" id="img" name="img"-->
+<!--                                   class="form-control mb-2"-->
+<!--                                   accept="image/gif,image/png,image/jpeg"-->
+<!--                                   placeholder="支持jpg、png、gif格式图片">-->
+<!--                            <span class="text-secondary text-opacity-50">-->
+<!--                        支持jpg、png、gif格式图片-->
+<!--                    </span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-major" data-bs-dismiss="modal">确定</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--        &lt;!&ndash;        <div class="input-group">&ndash;&gt;-->
+<!--        &lt;!&ndash;            <label class="input-group-text">添加图片</label>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <input type="file" class="form-control" id="img" aria-describedby="inputGroupFileAddon04"&ndash;&gt;-->
+<!--        &lt;!&ndash;                   aria-label="Upload" name="img">&ndash;&gt;-->
+<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </form>-->
+<!--</div>-->
+撞破南墙找西墙<br>
+(山东省实验中学西校学生社区)<br>
+&copy; 2024 撞破南墙找西墙. All rights reserved.<br><br>
+
+
+<script language="javascript">
+    /*一言*/
+      //(一言)老式写法，兼容性最好; 支持 IE
+    var set_hitokoto = function(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', 'https://v1.hitokoto.cn');
+      xhr.onreadystatechange = function () {
+        console.log(xhr.readyState);
+        console.log(xhr.responseText);
+        if (xhr.readyState === 4) {
+          var data = JSON.parse(xhr.responseText);
+          var hitokoto_text = document.getElementById('hitokoto_text');
+          hitokoto_text.innerText = data.hitokoto;
+          var hitokoto_information = document.getElementById("hitokoto_information");
+          if (data.from_who == null){data.from_who=''}
+          hitokoto_information.innerText = '—— ' + data.from_who + '「' + data.from + '」';
+          var hitokoto = document.getElementById("hitokoto");
+          hitokoto.style.display="inline";
+        }
+      }
+      xhr.send();
+      return null;
+    }
+
+    window.onload = function(){
+      set_hitokoto();
+    }
+</script>

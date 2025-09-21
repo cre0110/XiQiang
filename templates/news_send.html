@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>撞破南墙找西墙</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/s.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+{% include '_nav_index.html' %}
+
+<br><br>
+
+{% for message in get_flashed_messages(with_categories=True) %}
+<div class="container">
+    <div class="alert alert-{{ message[0] }}">
+        {{ message[1]|safe }}
+    </div>
+</div>
+{% endfor %}
+
+<br>
+<div class="container mt-3">
+    <h2>发布新闻</h2>
+    <form action="" , method="post" enctype="multipart/form-data">
+        <div class="mb-3 mt-3">
+            <textarea class="form-control" rows="5" id="content" name="content" style="width: 100%;" maxlength="80" required></textarea>
+        </div>
+
+        <!--点击添加按钮只弹出模态框，不执行其它动作-->
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#uploadImgModal">添加图片</button>
+
+        <!-- 上传图片模态框 -->
+        <div class="modal fade" id="uploadImgModal" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateImgModal-staticBackdropLabel">上传图片</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mx-3">
+                            <!-- 图片类型：gif、png、jpeg -->
+                            <input type="file" id="img" name="img"
+                                   class="form-control mb-2"
+                                   accept="image/gif,image/png,image/jpeg"
+                                   placeholder="仅支持一张jpg、png、gif格式图片"
+                                   style="width: 100%">
+                            <span class="text-secondary text-opacity-50">
+                        仅支持一张jpg、png、gif格式图片
+                    </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!--        <div class="input-group">-->
+<!--            <label class="input-group-text">添加图片</label>-->
+<!--            <input type="file" class="form-control" id="img" aria-describedby="inputGroupFileAddon04"-->
+<!--                   aria-label="Upload" name="img">-->
+<!--        </div>-->
+        <br><br>
+        <button type="submit" class="btn btn-primary" style="background: #ff9933; border: 1px solid #ff9933;">发布
+        </button>
+    </form>
+
+    <br><br><br><br>
+</div>
+
+
+</body>
+</html>

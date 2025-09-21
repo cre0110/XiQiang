@@ -1,0 +1,122 @@
+[
+  {
+    "content": "动态发布测试",
+    "time": "2023-12-11 19:18:12",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "normal",
+    "mid": "17",
+    "img": "",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  },
+  {
+    "content": "发送测试",
+    "time": "2023-12-07 20:28:50",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "anonymous",
+    "mid": "16",
+    "img": "20231207ecdf5dcc2e6c48a6ae5892b050f9120b.jpg",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  },
+  {
+    "content": "发送<br>测试",
+    "time": "2023-12-07 20:26:34",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "anonymous",
+    "mid": "15",
+    "img": "2023120706010ac919804370b67747b71fd86ab8.jpg",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  },
+  {
+    "content": "5",
+    "time": "2023-11-23 20:13:39",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "normal",
+    "mid": "14",
+    "img": "",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  },
+  {
+    "content": "4",
+    "time": "2023-11-23 20:13:38",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "normal",
+    "mid": "13",
+    "img": "",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  },
+  {
+    "content": "3",
+    "time": "2023-11-23 20:13:37",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "normal",
+    "mid": "12",
+    "img": "",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  },
+  {
+    "content": "2",
+    "time": "2023-11-23 20:13:35",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "normal",
+    "mid": "11",
+    "img": "",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  },
+  {
+    "content": "1",
+    "time": "2023-11-23 20:13:34",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "normal",
+    "mid": "10",
+    "img": "",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  },
+  {
+    "content": "动态发布",
+    "time": "2023-11-23 20:13:32",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "anonymous",
+    "mid": "9",
+    "img": "",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  },
+  {
+    "content": "一定要注意：<br>除了评论的顺序是按发表时间由小到大排序的，<br>其他的页面（表白墙、新闻、审核页、我的投稿等）均为时间逆序排列，即后发表或过审的在前。<br>所以审核的时候尽量逆序（从后往前）审核，按照发布的时间顺序过审，这样在表白墙那一页就是按照时间顺序排列的了",
+    "time": "2023-11-23 20:12:31",
+    "head": "/static/headimg.jpg",
+    "name": "admin",
+    "type": "anonymous",
+    "mid": "8",
+    "img": "",
+    "power": "examine-send_news-change_power-manage_server-official-vip",
+    "is_vip": true,
+    "is_official": true
+  }
+]

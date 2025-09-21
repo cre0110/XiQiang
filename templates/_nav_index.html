@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background: white;">
+<!--     style="background-image: url('/static/nav_bg.png'); background-size: 100% 100%; height: 100px;"-->
+    <div class="container">
+        <a class="navbar-brand" href="#">撞破南墙找西墙</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"><img src="/static/icons/home.svg" width="30px">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/wall"><img src="/static/icons/image.svg" width="30px">墙</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/send"><img src="/static/icons/add.svg" width="30px">发墙</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/news"><img src="/static/icons/info.svg" width="30px">通知</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/me"><img src="/static/icons/settings.svg" width="30px">我的</a>
+                </li>
+            </ul>
+            <form class="d-flex" action="/search" method="get">
+                <input class="form-control me-2 input-orange" type="search" placeholder="Search" aria-label="Search" name="key">
+            </form>
+            <div class="dropdown" style="margin: 10px;">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{{ user['head'] }}" alt="mdo" width="40" height="40" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+              {% if not user['qq'] %}
+              <li><a class="dropdown-item" href="#">您还未登录</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/login">前往登录</a></li>
+              {% else %}
+            <li><a class="dropdown-item" href="#">{{ user['name'] }}</a></li>
+            <li><a class="dropdown-item" href="/wall/user?uid={{ user['qq'] }}"><img src="/static/icons/info.svg" width="30px">我的投稿</a></li>
+            <li><a class="dropdown-item" href="/feedback"><img src="/static/icons/help.svg" width="30px">反馈&留言</a></li>
+            <li><a class="dropdown-item" href="/me"><img src="/static/icons/settings.svg" width="30px">个人设置</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/logout"><img src="/static/icons/cancel.svg" width="30px">退出登录</a></li>
+              {% endif %}
+          </ul>
+        </div>
+        </div>
+    </div>
+</nav>

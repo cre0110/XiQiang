@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>撞破南墙找西墙</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/s.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+{% include '_nav_index.html' %}
+
+<br><br>
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>我的投稿</h2>
+
+            {% for i in reslist %}
+
+            <!--    <div class="dynamic-card">-->
+            <!--    	{% if i['type'] == 'examined' %}-->
+            <!--        <div class="card" style="background: #d9fccd;">-->
+            <!--      {% else %}-->
+            <!--        <div class="card" style="background: #f8c3d0;">-->
+            <!--      {% endif %}-->
+            <!--            <div class="card-body" style="background: white; border-radius: 5px;">-->
+            <!--                <div class="d-flex justify-content-between align-items-center">-->
+            <!--                    <div>-->
+            <!--                        {% if i['type'] == 'anonymous' %}-->
+            <!--                        <img src="/static/userheader.svg" class="rounded-circle" style="margin: 5px;" width="60">-->
+            <!--                        <font size="5px">(本条匿名)</font>-->
+            <!--                        {% else %}-->
+            <!--                        <img src="{{ i['head'] }}" class="rounded-circle" style="margin: 5px;" width="60">-->
+            <!--                        <font size="5px">{{ i['name'] }}</font>-->
+            <!--                        {% endif %}-->
+            <!--                    </div>-->
+            <!--                    <div>-->
+            <!--                        <small class="text-muted">{{ i['time'] }}</small>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <hr>-->
+            <!--                <p>{{ i['content']|safe }}</p>-->
+            <!--                {% if i['img'] %}-->
+            <!--                <a href="/uploads/{{ i['img'] }}" target="_blank"><img src="/uploads/{{ i['img'] }}" width="150px" height="150px" class="img-fluid mt-3"></a>-->
+            <!--                {% endif %}-->
+            <!--            </div>-->
+            <!--    	{% if i['type'] == 'examined' %}-->
+            <!--						<font style="margin: 8px;">已审核</font>-->
+            <!--      {% else %}-->
+            <!--            <button type="submit" class="btn"style="background: #f8c3d0; border: 1px solid #f8c3d0; color: white;">待审核</button>-->
+            <!--      {% endif %}-->
+            <!--            </form>-->
+            <!--        </div>-->
+            <!--    </div>-->
+
+            <div class="post">
+                <div class="card" style="box-shadow: 5px 5px 10px gray;">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            {% if i['type'] == 'anonymous' %}
+                            <img src="/static/userheader.svg" width="60px" alt="User Avatar"
+                                 class="avatar me-3 rounded-circle">
+                            <div>
+                                <h5 class="mb-0">匿名用户</h5>
+                                <p class="text-muted mb-0">{{ i['time'] }}</p>
+                            </div>
+                            {% else %}
+                            <img src="{{ i['head'] }}" width="60px" alt="User Avatar"
+                                 class="avatar me-3 rounded-circle">
+                            <div>
+                                <h5 class="mb-0">{{ i['name'] }}
+                                    {% if i['is_official'] %}&nbsp;<span class="badge bg-official">官方</span>{% endif %}
+                                    {% if i['is_vip'] %}&nbsp;<span class="badge bg-vip">VIP</span>{% endif %}
+                                </h5>
+                                <p class="text-muted mb-0">{{ i['time'] }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="post-content">{{ i['content']|safe }}</p>
+                        {% if i['img'] %}
+                        <a href="/uploads/{{ i['img'] }}" target="_blank"><img src="/uploads/{{ i['img'] }}"
+                                                                               width="200px" height="150px"
+                                                                               class="img-fluid mt-3"></a>
+                        {% endif %}
+                        <br><br>
+                        {% if i['status'] == 'examined' %}
+                        <button type="button" class="btn btn-success">&nbsp;&nbsp;已过审&nbsp;&nbsp;</button>
+                        {% elif i['status'] == 'rejected' %}
+                        <button type="button" class="btn btn-danger">&nbsp;&nbsp;未过审&nbsp;&nbsp;</button>
+                        {% else %}
+                        <button type="button" class="btn btn-major">正在审核中...</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+            <br><br><br><br>
+            <center><font size="5px">仅显示近10条投稿</font></center>
+
+            <br><br><br><br><br>
+        </div>
+
+        <div class="col-md-4">
+            {% include '_frame_right.html' %}
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>

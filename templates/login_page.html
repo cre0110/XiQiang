@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>撞破南墙找西墙 - 登录</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/s.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+{% include '_nav_index.html' %}
+
+<br><br>
+
+{% for message in get_flashed_messages(with_categories=True) %}
+<div class="container">
+    <div class="alert alert-{{ message[0] }}">
+        {{ message[1]|safe }}
+    </div>
+</div>
+{% endfor %}
+
+<br><br><br><br>
+<div class="container">
+    <h2>登录 / 注册 账户</h2>
+    未注册QQ号将自动注册<br>将会向该QQ对应的将会向QQ邮箱发验证码以验证<br><br>
+    <form action="" , method="post">
+        <div class="mb-3 mt-3">
+            <label class="form-label">QQ：</label>
+            <input type="text" class="form-control" id="qq" placeholder="QQ(请填写真实的QQ号)" name="qq"
+                   style="width: 100%;" required>
+        </div>
+        <div class="mb-3">
+            <label for="pwd" class="form-label">密码：</label>
+            <input type="password" class="form-control" id="passwd" placeholder="本站密码(非QQ号密码)" name="passwd"
+                   style="width: 100%;" required>
+        </div><br>
+        <button type="submit" class="btn btn-ff9933">登录 / 注册</button>
+    </form>
+</div>
+<br><br><br><br><br><br><br><br>
+
+{% include '_footer.html' %}
+
+</body>
+</html>

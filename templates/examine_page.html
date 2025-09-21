@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>撞破南墙找西墙 - 审核</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/s.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+{% include '_nav_index.html' %}
+
+<br><br>
+
+{% for message in get_flashed_messages(with_categories=True) %}
+<div class="container">
+    <div class="alert alert-{{ message[0] }}">
+        {{ message[1]|safe }}
+    </div>
+</div>
+{% endfor %}
+
+<br>
+<div class="container mt-3">
+    <h2>审核</h2>
+
+    {% for i in reslist %}
+
+    <!--    <div class="dynamic-card">-->
+    <!--    	{% if i['type'] == 'examined' %}-->
+    <!--        <div class="card" style="background: #d9fccd;">-->
+    <!--      {% else %}-->
+    <!--        <div class="card" style="background: #f8c3d0;">-->
+    <!--      {% endif %}-->
+    <!--            <div class="card-body" style="background: white; border-radius: 5px;">-->
+    <!--                <div class="d-flex justify-content-between align-items-center">-->
+    <!--                    <div>-->
+    <!--                        {% if i['type'] == 'anonymous' %}-->
+    <!--                        <img src="/static/userheader.svg" class="rounded-circle" style="margin: 5px;" width="60">-->
+    <!--                        <font size="5px">匿名用户</font>-->
+    <!--                        {% else %}-->
+    <!--                        <img src="{{ i['head'] }}" class="rounded-circle" style="margin: 5px;" width="60">-->
+    <!--                        <font size="5px">{{ i['name'] }}</font>-->
+    <!--                        {% endif %}-->
+    <!--                    </div>-->
+    <!--                    <div>-->
+    <!--                        <small class="text-muted">{{ i['time'] }}</small>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <hr>-->
+    <!--                <p>{{ i['content']|safe }}</p>-->
+    <!--                {% if i['img'] %}-->
+    <!--                <a href="/uploads/{{ i['img'] }}" target="_blank"><img src="/uploads/{{ i['img'] }}" width="150px" height="150px" class="img-fluid mt-3"></a>-->
+    <!--                {% endif %}-->
+    <!--            </div>-->
+    <!--    	{% if i['type'] == 'examined' %}-->
+    <!--						<font style="margin: 8px;">已审核</font>-->
+    <!--      {% else %}-->
+    <!--            <a href="/examine?mid={{ i['mid'] }}"><button type="submit" class="btn"style="background: #f8c3d0; border: 1px solid #f8c3d0; color: white;">过审</button></a>-->
+    <!--      {% endif %}-->
+    <!--            </form>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <div class="post">
+        <div class="card" style="box-shadow: 5px 5px 10px gray;">
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    {% if i['type'] == 'anonymous' %}
+                    <img src="/static/userheader.svg" width="60px" alt="User Avatar"
+                         class="avatar me-3 rounded-circle">
+                    <div>
+                        <h5 class="mb-0">匿名用户</h5>
+                        <p class="text-muted mb-0">{{ i['time'] }}</p>
+                    </div>
+                    {% else %}
+                    <img src="{{ i['head'] }}" width="60px" alt="User Avatar"
+                         class="avatar me-3 rounded-circle">
+                    <div>
+                        <h5 class="mb-0">{{ i['name'] }}
+                            {% if i['is_official'] %}&nbsp;<span class="badge bg-official">官方</span>{% endif %}
+                            {% if i['is_vip'] %}&nbsp;<span class="badge bg-vip">VIP</span>{% endif %}
+                        </h5>
+                        <p class="text-muted mb-0">{{ i['time'] }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="post-content">{{ i['content']|safe }}</p>
+                {% if i['img'] %}
+                <a href="/uploads/{{ i['img'] }}">
+                    <img src="/uploads/{{ i['img'] }}" class="img-fluid mt-3 img-style"></a>
+                {% endif %}
+                <br><br>
+
+                {% if i['status'] == 'examined' %}
+                <button type="button" class="btn btn-success">已过审</button>
+                <a href="/examine?page={{ page }}&mid={{ i['mid'] }}&operation=reject">
+                    <button type="submit" class="btn btn-major">驳回</button>
+                </a>
+                {% elif i['status'] == 'rejected' %}
+                <button type="button" class="btn btn-danger">被驳回</button>
+                <a href="/examine?page={{ page }}&mid={{ i['mid'] }}&operation=pass">
+                    <button type="submit" class="btn btn-major">重新过审</button>
+                </a>
+                {% else %}
+                <a href="/examine?page={{ page }}&mid={{ i['mid'] }}&operation=pass">
+                    <button type="submit" class="btn btn-major">过审</button>
+                </a>
+                <a href="/examine?page={{ page }}&mid={{ i['mid'] }}&operation=reject">
+                    <button type="submit" class="btn btn-major">驳回</button>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    <br><br>
+    <ul class="pagination justify-content-center">
+        {% if page == 1 %}
+        <li class="page-item disabled"><a class="page-link">首页</a></li>
+        <li class="page-item disabled"><a class="page-link">上一页</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="/examine">首页</a></li>
+        <li class="page-item"><a class="page-link" href="/examine?page={{ page - 1 }}">上一页</a></li>
+        {% endif %}
+        <li class="page-item active"><a class="page-link" href="#">{{ page }}</a></li>
+        {% if page == page_num %}
+        <li class="page-item disabled"><a class="page-link">下一页</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="/examine?page={{ page + 1 }}">下一页</a></li>
+        {% endif %}
+    </ul>
+
+    <br><br><br><br><br>
+
+    <!-- <form action="", method="post">
+      <div class="mb-3 mt-3">
+        <label class="form-label">MID：</label>
+        <input type="number" class="form-control" id="mid" placeholder="MID" name="mid" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="background: #f8c3d0; border: 1px solid #f8c3d0;">过审</button>
+    </form> -->
+</div>
+
+
+</body>
+</html>

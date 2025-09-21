@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>撞破南墙找西墙</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/s.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+{% include '_nav_index.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <br><br><br>
+            <ul class="list-group">
+                <center><img src="{{ user['head'] }}" width="120px" height="120px" style="border-radius:50%;"><br><br>
+                </center>
+            </ul>
+            <ul class="list-group" style="box-shadow: 5px 5px 10px gray;">
+                <center>
+                    <li class="list-group-item list-group-item-color"><font size="5px">{{ user['name'] }}</font><br>(QQ:{{
+                        user['qq'] }})
+                    </li>
+                </center>
+                {% if usr['vip'] %}
+                <li class="list-group-item">用户等级： VIP</li>
+                {% else %}
+                <li class="list-group-item">用户等级： 普通用户</li>
+                {% endif %}
+                <li class="list-group-item">管理权限： {{ usr['manage'] }}</li>
+                <a href="/logout" class="list-group-item list-group-item-action">退出登录</a>
+            </ul>
+
+            <br><br><br>
+        </div>
+
+        <div class="col-md-7 news-list">
+            <br>
+            <ul class="list-group" style="box-shadow: 5px 5px 10px gray;">
+                <li class="list-group-item list-group-item-color">用户信息</li>
+                <li class="list-group-item">UID：{{ user['uid'] }}</li>
+                <li class="list-group-item">昵称：{{ user['name'] }}</li>
+                <li class="list-group-item">QQ ：{{ user['qq'] }}</li>
+                <li class="list-group-item list-group-item-color">个人设置</li>
+                <a href="/wall/user?uid={{ user['uid'] }}" class="list-group-item list-group-item-action">我的投稿</a>
+                <a href="/change_name" class="list-group-item list-group-item-action">修改用户名</a>
+                <a href="/change_passwd" class="list-group-item list-group-item-action">修改密码</a>
+                <a href="/feedback" class="list-group-item list-group-item-action">反馈意见&留言</a>
+<!--                <a href="https://afdian.net/a/creeper2007" class="list-group-item list-group-item-action">赞助得VIP</a>-->
+            {% if usr['show_management'] %}
+                <li class="list-group-item list-group-item-color">网站管理</li>
+                <a href="/examine" class="list-group-item list-group-item-action">投稿审核</a>
+                <a href="/news_send" class="list-group-item list-group-item-action">投送学校学生新闻</a>
+                <a href="/banner_send" class="list-group-item list-group-item-action">投放首页轮播图</a>
+                <a href="/change_power" class="list-group-item list-group-item-action">修改用户权限</a>
+                <a href="/del_pics" class="list-group-item list-group-item-action">服务器空间清理</a>
+            {% endif %}
+            </ul>
+            <br><br>
+            <div class="alert" style="box-shadow: 5px 5px 10px gray; background-color: white;">
+                <div id="hitokoto" style="display: inline;">
+                    <br>
+                    <strong><p id="hitokoto_text" style="text-align:center;"></p></strong>
+                    <p id="hitokoto_information" style="text-align:right;"></p>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br>
+</div>
+
+{% include '_footer.html' %}
+
+
+<script language="javascript">
+    /*一言*/
+      //(一言)老式写法，兼容性最好; 支持 IE
+    var set_hitokoto = function(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', 'https://v1.hitokoto.cn');
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          var data = JSON.parse(xhr.responseText);
+          var hitokoto_text = document.getElementById('hitokoto_text');
+          hitokoto_text.innerText = data.hitokoto;
+          var hitokoto_information = document.getElementById("hitokoto_information");
+          if (data.from_who == null){data.from_who=''}
+          hitokoto_information.innerText = '—— ' + data.from_who + '「' + data.from + '」';
+          var hitokoto = document.getElementById("hitokoto");
+          hitokoto.style.display="inline";
+        }
+      }
+      xhr.send();
+      return null;
+    }
+
+    window.onload = function(){
+      set_hitokoto();
+    }
+</script>
+
+<script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

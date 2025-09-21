@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>撞破南墙找西墙 - 搜索结果</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/s.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+{% include '_nav_index.html' %}
+
+<br><br>
+
+{% for message in get_flashed_messages(with_categories=True) %}
+<div class="container">
+    <div class="alert alert-{{ message[0] }}">
+        {{ message[1]|safe }}
+    </div>
+</div>
+{% endfor %}
+
+<!--  <div class="card" style="width:100%">-->
+<!--    <div class="card-body">-->
+<!--      <img src="https://static.runoob.com/images/mix/img_avatar.png" class="wall_img_head"><h4 class="card-title">947482650</h4>-->
+<!--      <p class="card-text">Some example text some example text. Jane Doe is an architect and engineer</p>-->
+<!--      <a href="#" class="btn btn-primary">See Profile</a>-->
+<!--    </div>-->
+
+<div class="container mt-3">
+    <h2>搜索结果</h2><br>
+
+    {% for i in reslist %}
+
+    <div class="contain_box" style="box-shadow: 1px 1px 5px gray;">
+                <div class="left_avatar">
+                    {% if i['type'] == 'anonymous' %}
+                    <img src="/static/userheader.svg" width="60px" alt="User Avatar"
+                         class="avatar me-3 rounded-circle">
+                    {% else %}
+                    <img src="{{ i['head'] }}" width="60px" alt="User Avatar"
+                         class="avatar me-3 rounded-circle">
+                    {% endif %}
+                </div>
+                <div class="right_div">
+                    {% if i['type'] == 'anonymous' %}
+                        <h5 class="mb-0">匿名用户</h5>
+                        <p class="text-muted mb-0">{{ i['time'] }}</p>
+                    {% else %}
+                        <h5 class="mb-0">{{ i['name'] }}
+                            {% if i['is_official'] %}&nbsp;<span class="badge bg-official">官方</span>{% endif %}
+                            {% if i['is_vip'] %}&nbsp;<span class="badge bg-vip">VIP</span>{% endif %}
+                        </h5>
+                        <p class="text-muted mb-0">{{ i['time'] }}</p>
+                    {% endif %}
+                </div>
+                <br>
+                <div class="card-body">
+                    <p class="post-content">{{ i['content']|safe }}</p>
+                    {% if i['img'] %}
+                    <a href="/uploads/{{ i['img'] }}" target="_blank"><img src="/uploads/{{ i['img'] }}"
+                                                                           width="200px" height="150px"
+                                                                           class="img-fluid mt-3"></a>
+                    {% endif %}
+                    <br><br>
+                    <a href="/messages?mid={{ i['mid'] }}">
+                    <button type="submit" class="btn btn-ff9933">查看</button>
+                </a>
+                </div>
+            </div>
+
+    <!--    <div class="dynamic-card">-->
+    <!--        {% if i['is_vip'] %}-->
+    <!--        <div class="card card-8ec5fc">-->
+    <!--        {% else %}-->
+    <!--        <div class="card card-fad0c4">-->
+    <!--        {% endif %}-->
+    <!--            <div class="d-flex justify-content-between align-items-center" style="padding: 5px;">-->
+    <!--                <div>-->
+    <!--                    {% if i['type'] == 'anonymous' %}-->
+    <!--                    <img src="/static/userheader.svg" class="rounded-circle" style="margin: 5px;" width="60">-->
+    <!--                    <font size="5px">匿名用户</font>-->
+    <!--                    {% else %}-->
+    <!--                    <img src="{{ i['head'] }}" class="rounded-circle" style="margin: 5px;" width="60">-->
+    <!--                    <font size="5px">{{ i['name'] }}-->
+    <!--                        {% if i['is_official'] %}&nbsp;<span class="badge bg-warning">官方</span>{% endif %}-->
+    <!--                        {% if i['is_vip'] %}&nbsp;<span class="badge bg-danger">VIP</span>{% endif %}-->
+    <!--                    </font>-->
+    <!--                    {% endif %}-->
+    <!--                </div>-->
+    <!--                <div>-->
+    <!--                    <small class="text-muted">{{ i['time'] }}</small>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="card-body">-->
+    <!--                <p>{{ i['content']|safe }}</p>-->
+    <!--                {% if i['img'] %}-->
+    <!--                <a href="/uploads/{{ i['img'] }}" target="_blank"><img src="/uploads/{{ i['img'] }}" width="200px" height="150px" class="img-fluid mt-3"></a>-->
+    <!--                {% endif %}-->
+    <!--                <br><br><a href="/messages?mid={{ i['mid'] }}"><button type="submit" class="btn btn-ff9933">评论</button></a>-->
+    <!--            </div>-->
+    <!--&lt;!&ndash;            <a href="/messages?mid={{ i['mid'] }}"><button type="button" class="btn bottom_btn">评论</button></a>&ndash;&gt;-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    {% endfor %}
+    <br><br>
+
+    <br><br><br><br><br>
+
+</div>
+<!--    <img class="card-img-bottom" src="https://static.runoob.com/images/mix/img_avatar.png" alt="Card image" style="width:100%">-->
+</div>
+
+</body>
+</html>

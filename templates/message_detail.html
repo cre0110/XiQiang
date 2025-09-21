@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>撞破南墙找西墙</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/s.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+{% include '_nav_index.html' %}
+
+<br><br>
+
+{% for message in get_flashed_messages(with_categories=True) %}
+<div class="container">
+    <div class="alert alert-{{ message[0] }}">
+        {{ message[1]|safe }}
+    </div>
+</div>
+{% endfor %}
+
+<br>
+
+<!--  <div class="card" style="width:100%">-->
+<!--    <div class="card-body">-->
+<!--      <img src="https://static.runoob.com/images/mix/img_avatar.png" class="wall_img_head"><h4 class="card-title">947482650</h4>-->
+<!--      <p class="card-text">Some example text some example text. Jane Doe is an architect and engineer</p>-->
+<!--      <a href="#" class="btn btn-primary">See Profile</a>-->
+<!--    </div>-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+
+            <div class="contain_box" style="box-shadow: 1px 1px 5px gray;">
+                <div class="left_avatar">
+                    {% if message['type'] == 'anonymous' %}
+                    <img src="/static/userheader.svg" width="60px" alt="User Avatar"
+                         class="avatar me-3 rounded-circle">
+                    {% else %}
+                    <img src="{{ message['head'] }}" width="60px" alt="User Avatar"
+                         class="avatar me-3 rounded-circle">
+                    {% endif %}
+                </div>
+                <div class="right_div">
+                    {% if message['type'] == 'anonymous' %}
+                    <h5 class="mb-0">匿名用户</h5>
+                    <p class="text-muted mb-0">{{ message['time'] }}</p>
+                    {% else %}
+                    <h5 class="mb-0">{{ message['name'] }}
+                        {% if message['is_official'] %}&nbsp;<span class="badge bg-official">官方</span>{% endif %}
+                        {% if message['is_vip'] %}&nbsp;<span class="badge bg-vip">VIP</span>{% endif %}
+                    </h5>
+                    <p class="text-muted mb-0">{{ message['time'] }}</p>
+                    {% endif %}
+                </div>
+                <br>
+                <div class="card-body">
+                    <p class="post-content">{{ message['content']|safe }}</p>
+                    {% if message['img'] %}
+                    <a href="/uploads/{{ message['img'] }}" target="_blank">
+                        <img src="/uploads/{{ message['img'] }}" class="img-fluid mt-3 img-style"></a>
+
+                    {% endif %}
+                    <br><br>
+                    {% if message['is_self_liked'] %}
+                    <button id="btn-approve" class="btn btn-approved"
+                            onclick="approve({{ message['mid'] }}, {{ user['uid'] }})">已赞同 &nbsp; {{ message['likes']
+                        }}
+                    </button>
+                    {% else %}
+                    <button id="btn-approve" class="btn btn-disapproved"
+                            onclick="approve({{ message['mid'] }}, {{ user['uid'] }})">赞同 &nbsp; {{ message['likes']
+                        }}
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+
+            <br><br><br><br>
+            <div class="contain_box" style="box-shadow: 1px 1px 5px gray; padding: 30px;">
+                <h2>发表评论</h2>
+                <form action="" , method="post">
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">评论：</label>
+                        <input type="text" class="form-control" id="comment" placeholder="输入评论内容..."
+                               name="comment"
+                               style="width: 100%;" required>
+                    </div>
+                    <button type="submit" class="btn btn-major">评论</button>
+                </form>
+            </div>
+            <br>
+            {% for i in comment_list %}
+            <div class="contain_box" style="box-shadow: 1px 1px 5px gray;">
+                <img src="{{ i['head'] }}" class="rounded-circle" style="margin: 5px;" width="30">
+                <font size="3px">{{ i['name'] }}
+                    {% if i['is_official'] %}&nbsp;<span class="badge bg-official">官方</span>{% endif %}
+                    {% if i['is_vip'] %}&nbsp;<span class="badge bg-vip">VIP</span>{% endif %}
+                    <font size="2px" color="gray">{{ i['time'] }}</font>
+                </font>
+                <hr>
+                <p>{{ i['content'] }}</p>
+            </div>
+            {% endfor %}
+
+
+            <br><br>
+            <ul class="pagination justify-content-center">
+                {% if page == 1 %}
+                <li class="page-item disabled"><a class="page-link">首页</a></li>
+                <li class="page-item disabled"><a class="page-link">上一页</a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="/messages?mid={{ message['mid'] }}">首页</a></li>
+                <li class="page-item"><a class="page-link"
+                                         href="/messages?mid={{ message['mid'] }}&page={{ page - 1 }}">上一页</a></li>
+                {% endif %}
+                <li class="page-item active"><a class="page-link" href="#">{{ page }}</a></li>
+                {% if page == page_num %}
+                <li class="page-item disabled"><a class="page-link">下一页</a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link"
+                                         href="/messages?mid={{ message['mid'] }}&page={{ page + 1 }}">下一页</a></li>
+                {% endif %}
+            </ul>
+
+            <br><br><br><br><br>
+        </div>
+        <div class="col-md-4">
+            {% include '_frame_right.html' %}
+        </div>
+
+        <div class="col-md-1"></div>
+
+
+    </div>
+    <!--    <img class="card-img-bottom" src="https://static.runoob.com/images/mix/img_avatar.png" alt="Card image" style="width:100%">-->
+</div>
+
+<script type="text/javascript">
+    function approve(mid, uid) {
+        if (uid == 0) {
+            alert("您还未登录，请先登录");
+        }
+        else {
+            let xhr= new XMLHttpRequest();
+            xhr.open("GET", "/api/approve_message?mid=" + mid + "&uid=" + uid, true);
+            xhr.send();
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var value = document.getElementById("btn-approve").className;
+                    if (value == "btn btn-approved") {
+                        document.getElementById("btn-approve").className = "btn btn-disapproved";
+                        document.getElementById("btn-approve").innerHTML = "赞同 &nbsp; " + xhr.response;
+                    }
+                    else {
+                        document.getElementById("btn-approve").className = "btn btn-approved";
+                        document.getElementById("btn-approve").innerHTML = "已赞同 &nbsp; " + xhr.response;
+                    }
+                }
+                else if(xhr.status == 404) {
+
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

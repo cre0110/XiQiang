@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>撞破南墙找西墙</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/s.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+{% include '_nav_index.html' %}
+
+<br><br>
+
+{% for message in get_flashed_messages(with_categories=True) %}
+<div class="container">
+    <div class="alert alert-{{ message[0] }}">
+        {{ message[1]|safe }}
+    </div>
+</div>
+{% endfor %}
+
+<br>
+<div class="container mt-3">
+    <h2>修改用户权限</h2>
+    <form action="" , method="post" enctype="multipart/form-data">
+        <div class="mb-3 mt-3">
+            <label class="form-label">用户UID：</label>
+            <input type="text" class="form-control" id="uid" placeholder="需要修改权限的用户的UID" name="uid"
+                   style="width: 100%;" required>
+        </div>
+        <br>
+        <label for="power" class="form-label">权限：</label>
+        <select class="form-select" id="power" name="power">
+            <option value="0">禁言/封号</option>
+            <option value="1">正常用户</option>
+            <option value="2">VIP用户</option>
+            <option value="3">官方账号</option>
+            <option value="6">校方账号</option>
+            <option value="7">仅发布管理员(不含审核、修改权限)</option>
+            <option value="8">管理员</option>
+        </select>
+        <br>
+        <button type="submit" class="btn btn-major">修改
+        </button>
+    </form>
+</div>
+
+
+</body>
+</html>
